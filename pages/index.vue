@@ -4,14 +4,17 @@
     <article-card></article-card>
     <article-card></article-card>
     <article-card></article-card>
+    <pagination-list></pagination-list>
   </v-layout>
 </template>
 
 <script>
 import ArticleCard from '../components/ArticleCard'
+import PaginationList from '../components/PaginationList'
 export default {
   components: {
-    ArticleCard
+    ArticleCard,
+    PaginationList
   }
 }
 </script>
