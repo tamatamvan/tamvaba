@@ -12,6 +12,7 @@ export const state = () => ({
 
 export const mutations = {
   LOGIN_SUCCESS (state, userData) {
+    state.isLogin = true
     state.userData = userData
   }
 
@@ -31,5 +32,11 @@ export const actions = {
       .catch(err => {
         console.error(err)
       })
+  },
+  signOut ({ commit }) {
+    return firebase.auth()
+      .signOut()
+      .then(data => console.log('sign out success ', data))
+      .catch(err => console.log('failed to sign out ', err))
   }
 }
