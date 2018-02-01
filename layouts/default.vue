@@ -36,7 +36,7 @@
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile
-        @click.native="signOut"
+        @click.native="signOut().then(() => $router.push('/login'))"
         v-else>
           <v-list-tile-action>
             <v-icon v-html="'exit_to_app'"></v-icon>
