@@ -21,6 +21,7 @@ export const mutations = {
   },
   LOGIN_FAIL (state, errMsg) {
     state.errLogin.status = true
+    state.authLoading = false
     state.errLogin.message = errMsg
   },
   RESET_ERROR_LOGIN (state) {
