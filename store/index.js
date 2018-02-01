@@ -2,7 +2,7 @@ import firebase from 'firebase'
 
 export const state = () => ({
   isLogin: false,
-  loginLoading: false,
+  authLoading: false,
   errLogin: {
     status: false,
     message: ''
@@ -12,10 +12,17 @@ export const state = () => ({
 
 export const mutations = {
   LOGIN_SUCCESS (state, userData) {
-    state.isLogin = true
     state.userData = userData
+    state.isLogin = true
+    state.authLoading = false
+  },
+  LOGIN_PENDING (state) {
+    state.authLoading = true
+  },
+  LOGIN_FAIL (state, errMsg) {
+    state.errLogin.status = true
+    state.errLogin.message = errMsg
   }
-
 }
 
 export const actions = {
@@ -30,7 +37,7 @@ export const actions = {
         })
       })
       .catch(err => {
-        console.error(err)
+        commit('LOGIN_FAIL', err.message)
       })
   },
   signOut ({ commit }) {
