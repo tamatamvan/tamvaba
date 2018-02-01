@@ -1,6 +1,4 @@
 export const state = () => ({
-  all: {
-    datas: [],
-    loading: false
-  }
+  all: [],
+  loading: false
 })
