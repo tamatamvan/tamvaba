@@ -29,6 +29,10 @@ export const mutations = {
       status: false,
       message: ''
     }
+  },
+  SIGN_OUT (state) {
+    state.isLogin = false
+    state.userData = {}
   }
 }
 
@@ -50,7 +54,7 @@ export const actions = {
   signOut ({ commit }) {
     return firebase.auth()
       .signOut()
-      .then(data => console.log('sign out success ', data))
+      .then(() => commit('SIGN_OUT'))
       .catch(err => console.log('failed to sign out ', err))
   }
 }
