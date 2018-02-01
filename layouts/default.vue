@@ -76,7 +76,7 @@
         fixed: false,
         items: [
           { icon: 'apps', title: 'Welcome', to: '/' },
-          { icon: 'login', title: 'Login', to: '/login' }
+          { icon: 'person', title: 'Login', to: '/login' }
         ],
         miniVariant: false,
         right: true,
