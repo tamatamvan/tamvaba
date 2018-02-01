@@ -22,6 +22,29 @@
             <v-list-tile-title v-text="item.title"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile
+          v-if="!isLogin"
+          router
+          :to="'/login'"
+          exact
+        >
+          <v-list-tile-action>
+            <v-icon v-html="'person'"></v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title v-text="'Login'"></v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile
+        @click.native="signOut"
+        v-else>
+          <v-list-tile-action>
+            <v-icon v-html="'exit_to_app'"></v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title v-text="'Logout'"></v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar fixed app :clipped-left="clipped">
@@ -68,6 +91,7 @@
 </template>
 
 <script>
+  import { mapState, mapActions } from 'vuex'
   export default {
     data () {
       return {
@@ -75,14 +99,23 @@
         drawer: false,
         fixed: false,
         items: [
-          { icon: 'apps', title: 'Welcome', to: '/' },
-          { icon: 'person', title: 'Login', to: '/login' }
+          { icon: 'apps', title: 'Welcome', to: '/' }
         ],
         miniVariant: false,
         right: true,
         rightDrawer: false,
         title: 'Tamvan Blog Manager'
       }
+    },
+    computed: {
+      ...mapState([
+        'isLogin'
+      ])
+    },
+    methods: {
+      ...mapActions([
+        'signOut'
+      ])
     }
   }
 </script>
