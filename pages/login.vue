@@ -2,6 +2,14 @@
   <v-layout align-center justify-center>
     <v-flex xs12 sm8 md6 text-xs-center>
       <h1>Login</h1>
+      <v-alert dismissible 
+      color="error"
+      icon="priority_high"
+      value="errLogin.status"
+      v-if="errLogin.status"
+      @input="clearErr">
+        {{ errLogin.message }}
+      </v-alert>
       <v-form v-model="valid" @submit.prevent="login(formLogin  )">
         <v-text-field
           label="E-mail"
@@ -32,7 +40,8 @@
 <script>
 import {
   mapActions,
-  mapState
+  mapState,
+  mapMutations
 } from 'vuex'
 
 export default {
@@ -55,12 +64,16 @@ export default {
   },
   computed: {
     ...mapState([
-      'authLoading'
+      'authLoading',
+      'errLogin'
     ])
   },
   methods: {
     ...mapActions({
       login: 'signInWithEmail'
+    }),
+    ...mapMutations({
+      clearErr: 'RESET_ERROR_LOGIN'
     })
   }
 }
