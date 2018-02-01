@@ -17,14 +17,24 @@
           :counter="8"
           required
         ></v-text-field>
-        <v-btn type="submit">Login</v-btn>
+        <v-btn
+        type="submit"
+        :loading="authLoading"
+        :disabled="authLoading"
+        >Login
+          <span slot="loader">Loading...</span>
+        </v-btn>
       </v-form>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import {
+  mapActions,
+  mapState
+} from 'vuex'
+
 export default {
   data () {
     return {
@@ -42,6 +52,11 @@ export default {
         (v) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/.test(v) || 'E-mail must be valid'
       ]
     }
+  },
+  computed: {
+    ...mapState([
+      'authLoading'
+    ])
   },
   methods: {
     ...mapActions({
