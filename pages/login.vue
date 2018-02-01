@@ -10,7 +10,8 @@
       @input="clearErr">
         {{ errLogin.message }}
       </v-alert>
-      <v-form v-model="valid" @submit.prevent="login(formLogin  )">
+      <v-form v-model="valid"
+      @submit.prevent="login(formLogin).then(()=> $router.push('/'))">
         <v-text-field
           label="E-mail"
           v-model="formLogin.email"
