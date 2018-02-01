@@ -15,15 +15,11 @@
 </template>
 
 <script>
-  import { VPagination } from 'vuetify'
   export default {
     data () {
       return {
         page: 1
       }
-    },
-    components: {
-      VPagination
     }
   }
 </script>
