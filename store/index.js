@@ -1,9 +1,4 @@
 export const state = () => ({
-  sidebar: false
+  isLogin: false,
+  userData: {}
 })
-
-export const mutations = {
-  toggleSidebar (state) {
-    state.sidebar = !state.sidebar
-  }
-}
