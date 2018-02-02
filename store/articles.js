@@ -13,8 +13,14 @@ export const state = () => ({
   loading: false
 })
 
+export const mutations = {
+  LOAD_ALL_ARTICLES_SUCCESS (state, articles) {
+    state.all = articles
+  }
+}
+
 export const actions = {
-  getAll () {
+  getAll ({ commit }) {
     db.collection('articles').get()
       .then(docs => {
         const articles = []
@@ -24,7 +30,7 @@ export const actions = {
             ...doc.data()
           })
         })
-        console.log('get articles ', articles)
+        commit('LOAD_ALL_ARTICLES_SUCCESS', articles)
       })
       .catch(err => {
         console.error(err)
