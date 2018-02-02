@@ -1,13 +1,13 @@
 <template>
   <v-flex xs12 sm8 md6 class="gutter-8">
     <v-card>
-      <v-card-media src="https://static.pexels.com/photos/290164/pexels-photo-290164.jpeg" height="200px">
+      <v-card-media :src="article.featured_img" height="200px">
       </v-card-media>
       <v-card-title primary-title>
         <div>
-          <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
+          <h3 class="headline mb-0">{{ article.title }}</h3>
           <p class="summary">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis itaque maxime laboriosam asperiores error quibusdam nemo consequuntur alias placeat nisi quas illum blanditiis, cupiditate consequatur quis delectus dolores, et fugiat.
+            {{ article.summary }}
           </p>
         </div>
       </v-card-title>
@@ -19,6 +19,17 @@
     </v-card>
   </v-flex>
 </template>
+
+<script>
+export default {
+  props: {
+    article: {
+      type: Object
+    }
+  }
+}
+</script>
+
 
 <style scoped>
 .gutter-8 {
