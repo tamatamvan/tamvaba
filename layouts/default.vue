@@ -13,6 +13,7 @@
           :to="item.to"
           :key="i"
           v-for="(item, i) in items"
+          v-if="isLogin"
           exact
         >
           <v-list-tile-action>

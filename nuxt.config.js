@@ -43,7 +43,8 @@ module.exports = {
       ]
     },
     vendor: [
-      '~/plugins/vuetify.js'
+      '~/plugins/vuetify.js',
+      'firebase'
     ],
     extractCSS: true,
     /*
