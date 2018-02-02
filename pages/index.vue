@@ -1,15 +1,16 @@
 <template>
   <v-layout row wrap>
-    <article-card></article-card>
-    <article-card></article-card>
-    <article-card></article-card>
-    <article-card></article-card>
+    <article-card
+    v-for="(article, idx) in articles.all"
+    :article="article"
+    :key="idx"
+    ></article-card>
     <pagination-list></pagination-list>
   </v-layout>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import ArticleCard from '../components/ArticleCard'
 import PaginationList from '../components/PaginationList'
 export default {
@@ -18,13 +19,17 @@ export default {
     ArticleCard,
     PaginationList
   },
+  computed: {
+    ...mapState([
+      'articles'
+    ])
+  },
   methods: {
     ...mapActions({
       getAll: 'articles/getAll'
     })
   },
   mounted () {
-    console.log('hahahah')
     this.getAll()
   }
 }
