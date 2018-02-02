@@ -12,6 +12,7 @@
 import ArticleCard from '../components/ArticleCard'
 import PaginationList from '../components/PaginationList'
 export default {
+  middleware: 'authenticated',
   components: {
     ArticleCard,
     PaginationList
