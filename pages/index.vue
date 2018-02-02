@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import ArticleCard from '../components/ArticleCard'
 import PaginationList from '../components/PaginationList'
 export default {
@@ -16,6 +17,15 @@ export default {
   components: {
     ArticleCard,
     PaginationList
+  },
+  methods: {
+    ...mapActions({
+      getAll: 'articles/getAll'
+    })
+  },
+  mounted () {
+    console.log('hahahah')
+    this.getAll()
   }
 }
 </script>
