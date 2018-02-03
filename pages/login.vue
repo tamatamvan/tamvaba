@@ -1,39 +1,45 @@
 <template>
   <v-layout align-center justify-center>
     <v-flex xs12 sm8 md6 text-xs-center>
-      <h1>Login</h1>
-      <v-alert dismissible 
-      color="error"
-      icon="priority_high"
-      value="errLogin.status"
-      v-if="errLogin.status"
-      @input="clearErr">
-        {{ errLogin.message }}
-      </v-alert>
-      <v-form v-model="valid"
-      @submit.prevent="login(formLogin).then(()=> $router.push('/'))">
-        <v-text-field
-          label="E-mail"
-          v-model="formLogin.email"
-          :rules="emailRules"
-          required
-        ></v-text-field>
-        <v-text-field
-          type="password"
-          label="Password"
-          v-model="formLogin.password"
-          :rules="passwdRules"
-          :counter="8"
-          required
-        ></v-text-field>
-        <v-btn
-        type="submit"
-        :loading="authLoading"
-        :disabled="authLoading"
-        >Login
-          <span slot="loader">Loading...</span>
-        </v-btn>
-      </v-form>
+      <v-card>
+        <v-card-title>
+          <h2 class="headline md-0">Login</h2>
+          <div>
+            <v-alert dismissible 
+            color="error"
+            icon="priority_high"
+            value="errLogin.status"
+            v-if="errLogin.status"
+            @input="clearErr">
+              {{ errLogin.message }}
+            </v-alert>
+            <v-form v-model="valid"
+            @submit.prevent="login(formLogin).then(()=> $router.push('/'))">
+              <v-text-field
+                label="E-mail"
+                v-model="formLogin.email"
+                :rules="emailRules"
+                required
+              ></v-text-field>
+              <v-text-field
+                type="password"
+                label="Password"
+                v-model="formLogin.password"
+                :rules="passwdRules"
+                :counter="8"
+                required
+              ></v-text-field>
+              <v-btn
+              type="submit"
+              :loading="authLoading"
+              :disabled="authLoading"
+              >Login
+                <span slot="loader">Loading...</span>
+              </v-btn>
+            </v-form>
+          </div>
+        </v-card-title>
+      </v-card>
     </v-flex>
   </v-layout>
 </template>
@@ -79,3 +85,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.card__title {
+  display: block;
+}
+</style>
