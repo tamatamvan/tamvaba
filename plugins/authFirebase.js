@@ -15,9 +15,6 @@ export default function ({
         email: user.email,
         diplayName: user.displayName
       })
-      redirect('/')
-    } else {
-      redirect('/login')
     }
   })
 }
