@@ -22,7 +22,7 @@ export const mutations = {
   LOAD_ALL_ARTICLES_SUCCESS (state, articles) {
     state.all = articles
   },
-  LOAD_ALL_ARTICLE_PENDING (state) {
+  LOAD_ALL_ARTICLES_PENDING (state) {
     state.loading = true
   },
   LOAD_ALL_ARTICLE_FAIL (state, errMsg) {
