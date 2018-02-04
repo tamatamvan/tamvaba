@@ -1,6 +1,7 @@
 import firebase from 'firebase'
 import 'firebase/firestore'
 import config from '~/firebase-conf'
+import slug from 'slug'
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config)
@@ -42,7 +43,7 @@ export const mutations = {
     state.loading = false
   },
   RESET_ARTICLE_ERROR (state) {
-    state.article.err = {} 
+    state.article.err = {}
   }
 }
 
@@ -63,5 +64,12 @@ export const actions = {
       .catch(err => {
         commit('LOAD_ALL_ARTICLE_FAIL', err.message)
       })
+  },
+  postNew ({ commit }, newArticle) {
+    commit('POST_ARTICLE_PENDING')
+    db.collection('articles').doc(slug(newArticle.title).toLowerCase())
+      .set(newArticle)
+      .then(postedArticle => console.log(postedArticle))
+      .catch(err => console.error(err))
   }
 }
