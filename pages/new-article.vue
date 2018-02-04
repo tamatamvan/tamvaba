@@ -6,15 +6,16 @@
           <h2 class="md-0 headline">
             Create New Article
           </h2>
-          <!-- <v-alert dismissible 
+          <v-alert dismissible 
           color="error"
           icon="priority_high"
-          value="errLogin.status"
-          v-if="errLogin.status"
+          value="articlesErr.status"
+          v-if="articlesErr.status"
           @input="clearErr">
-            {{ errLogin.message }}
-          </v-alert> -->
-          <v-form v-model="valid">
+            {{ articlesErr.message }}
+          </v-alert>
+          <v-form v-model="valid"
+          @submit.prevent="postNew(newArticle).then(()=> $router.push('/'))">
             <v-text-field
               label="Title"
               v-model="newArticle.title"
@@ -64,6 +65,8 @@
             ></v-select>
             <v-btn
             type="submit"
+            :loading="articlesLoading"
+            :disabled="articlesLoading"
             >Post Article
               <span slot="loader">Loading...</span>
             </v-btn>
@@ -75,6 +78,10 @@
 </template>
 
 <script>
+import {
+  mapActions,
+  mapState
+} from 'vuex'
 export default {
   data () {
     return {
@@ -117,6 +124,17 @@ export default {
         'huhuhu'
       ]
     }
+  },
+  computed: {
+    ...mapState({
+      articlesLoading: state => state.articles.loading,
+      articlesErr: state => state.articles.err
+    })
+  },
+  methods: {
+    ...mapActions({
+      postNew: 'articles/postNew'
+    })
   }
 }
 </script>
