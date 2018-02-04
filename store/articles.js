@@ -67,9 +67,17 @@ export const actions = {
   },
   postNew ({ commit }, newArticle) {
     commit('POST_ARTICLE_PENDING')
-    db.collection('articles').doc(slug(newArticle.title).toLowerCase())
+    const articleId = slug(newArticle.title).toLowerCase()
+    db.collection('articles').doc(articleId)
       .set(newArticle)
-      .then(postedArticle => console.log(postedArticle))
-      .catch(err => console.error(err))
+      .then(() => {
+        commit('POST_ARTICLE_SUCCESS', {
+          ...newArticle,
+          id: articleId
+        })
+      })
+      .catch(err => {
+        commit('POST_ARTICLE_FAIL', err.message)
+      })
   }
 }
