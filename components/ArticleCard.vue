@@ -13,7 +13,9 @@
       </v-card-title>
       <v-card-actions>
         <v-btn flat color="orange">Preview</v-btn>
-        <v-btn flat color="orange">Edit</v-btn>
+        <v-btn flat color="orange"
+        @click.native="$router.push(`/edit-article/${article.id}`)"
+        >Edit</v-btn>
         <v-btn flat color="orange">Delete</v-btn>
       </v-card-actions>
     </v-card>
@@ -42,5 +44,8 @@ export default {
 }
 .summary {
   margin: 8px 0;
+}
+.card__actions {
+  justify-content: flex-end;
 }
 </style>
