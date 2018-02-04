@@ -48,6 +48,7 @@ export const mutations = {
 
 export const actions = {
   getAll ({ commit }) {
+    commit('LOAD_ALL_ARTICLES_PENDING')
     db.collection('articles').get()
       .then(docs => {
         const articles = []
@@ -60,7 +61,7 @@ export const actions = {
         commit('LOAD_ALL_ARTICLES_SUCCESS', articles)
       })
       .catch(err => {
-        console.error(err)
+        commit('LOAD_ALL_ARTICLE_FAIL', err.message)
       })
   }
 }
