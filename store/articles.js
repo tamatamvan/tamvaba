@@ -25,13 +25,19 @@ export const mutations = {
   },
   LOAD_ARTICLE_SUCCESS (state, article) {
     state.selected = article
+    state.loading = false
   },
   UPDATE_FIELD_VALUE (state, field) {
-    console.log('update field value')
     state.selected[field.name] = field.value
   },
   POST_ARTICLE_SUCCESS (state, article) {
-    state.all.push(article)
+    const idx = state.all.findIndex(art => art.id === article.id)
+    console.log('idx nya ', idx)
+    if (idx !== -1) {
+      state.all.splice(idx, 1, article)
+    } else {
+      state.all.push(article)
+    }
     state.loading = false
   },
   SET_PENDING (state) {
@@ -65,9 +71,9 @@ export const actions = {
         commit('SET_ERROR', err.message)
       })
   },
-  postNew ({ commit }, newArticle) {
+  post ({ commit }, newArticle) {
     commit('SET_PENDING')
-    const articleId = slug(newArticle.title).toLowerCase()
+    const articleId = newArticle.id || slug(newArticle.title).toLowerCase()
     db.collection('articles').doc(articleId)
       .set(newArticle)
       .then(() => {
@@ -86,7 +92,10 @@ export const actions = {
       .get()
       .then(doc => {
         if (doc.exists) {
-          commit('LOAD_ARTICLE_SUCCESS', doc.data())
+          commit('LOAD_ARTICLE_SUCCESS', {
+            id: id,
+            ...doc.data()
+          })
         } else {
           // doc.data() will be undefined in this case
           commit('SET_ERROR', 'No such document!')
