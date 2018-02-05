@@ -133,7 +133,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      postNew: 'articles/postNew'
+      postNew: 'articles/post'
     })
   }
 }
