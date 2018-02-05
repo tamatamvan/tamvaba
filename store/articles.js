@@ -11,6 +11,7 @@ const db = firebase.firestore()
 
 export const state = () => ({
   all: [],
+  selected: null,
   err: {
     status: false,
     message: ''
@@ -22,34 +23,33 @@ export const mutations = {
   LOAD_ALL_ARTICLES_SUCCESS (state, articles) {
     state.all = articles
   },
-  LOAD_ALL_ARTICLES_PENDING (state) {
-    state.loading = true
+  LOAD_ARTICLE_SUCCESS (state, article) {
+    state.selected = article
   },
-  LOAD_ALL_ARTICLE_FAIL (state, errMsg) {
-    state.loading = false
-    state.err.status = true
-    state.err.loading = true
+  UPDATE_FIELD_VALUE (state, field) {
+    console.log('update field value')
+    state.selected[field.name] = field.value
   },
   POST_ARTICLE_SUCCESS (state, article) {
     state.all.push(article)
     state.loading = false
   },
-  POST_ARTICLE_PENDING (state) {
+  SET_PENDING (state) {
     state.loading = true
   },
-  POST_ARTICLE_FAIL (state, errMsg) {
+  SET_ERROR (state, errMsg) {
     state.err.status = true
     state.err.message = errMsg
     state.loading = false
   },
-  RESET_ARTICLE_ERROR (state) {
+  RESET_ERROR (state) {
     state.article.err = {}
   }
 }
 
 export const actions = {
   getAll ({ commit }) {
-    commit('LOAD_ALL_ARTICLES_PENDING')
+    commit('SET_PENDING')
     db.collection('articles').get()
       .then(docs => {
         const articles = []
@@ -62,11 +62,11 @@ export const actions = {
         commit('LOAD_ALL_ARTICLES_SUCCESS', articles)
       })
       .catch(err => {
-        commit('LOAD_ALL_ARTICLE_FAIL', err.message)
+        commit('SET_ERROR', err.message)
       })
   },
   postNew ({ commit }, newArticle) {
-    commit('POST_ARTICLE_PENDING')
+    commit('SET_PENDING')
     const articleId = slug(newArticle.title).toLowerCase()
     db.collection('articles').doc(articleId)
       .set(newArticle)
@@ -77,7 +77,21 @@ export const actions = {
         })
       })
       .catch(err => {
-        commit('POST_ARTICLE_FAIL', err.message)
+        commit('SET_ERROR', err.message)
       })
+  },
+  getOne ({ commit }, id) {
+    commit('SET_PENDING')
+    db.collection('articles').doc(id)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          commit('LOAD_ARTICLE_SUCCESS', doc.data())
+        } else {
+          // doc.data() will be undefined in this case
+          commit('SET_ERROR', 'No such document!')
+        }
+      })
+      .catch(err => commit('SET_ERROR', err.message))
   }
 }
