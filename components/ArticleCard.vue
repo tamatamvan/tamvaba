@@ -16,18 +16,26 @@
         <v-btn flat color="orange"
         @click.native="$router.push(`/edit-article/${article.id}`)"
         >Edit</v-btn>
-        <v-btn flat color="orange">Delete</v-btn>
+        <v-btn flat color="orange"
+        @click.native="destroy(article.id)"
+        >Delete</v-btn>
       </v-card-actions>
     </v-card>
   </v-flex>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   props: {
     article: {
       type: Object
     }
+  },
+  methods: {
+    ...mapActions({
+      destroy: 'articles/deleteOne'
+    })
   }
 }
 </script>

@@ -40,6 +40,11 @@ export const mutations = {
     }
     state.loading = false
   },
+  DELETE_ARTICLE (state, articleId) {
+    const idx = state.all.findIndex(art => art.id === articleId)
+    state.all.splice(idx, 1)
+    state.loading = false
+  },
   SET_PENDING (state) {
     state.loading = true
   },
@@ -101,6 +106,13 @@ export const actions = {
           commit('SET_ERROR', 'No such document!')
         }
       })
+      .catch(err => commit('SET_ERROR', err.message))
+  },
+  deleteOne ({ commit }, id) {
+    commit('SET_PENDING')
+    db.collection('articles').doc(id)
+      .delete()
+      .then(() => commit('DELETE_ARTICLE', id))
       .catch(err => commit('SET_ERROR', err.message))
   }
 }
