@@ -16,12 +16,12 @@
           </v-alert>
           <v-form v-model="valid"
           v-if="article"
-          @submit.prevent="postNew(article).then(()=> $router.push('/'))">
+          @submit.prevent="post(article).then(()=> $router.push('/'))">
             <v-text-field
               label="Title"
               :value="article.title"
               @focus="selectField('title')"
-              @change="handleChange"
+              @input="handleChange"
               :rules="rules.title"
               required
             ></v-text-field>
@@ -29,7 +29,7 @@
               label="Content"
               :value="article.content"
               @focus="selectField('content')"
-              @change="handleChange"
+              @input="handleChange"
               :rules="rules.content"
               textarea
               required
@@ -38,7 +38,7 @@
               label="Summary"
               :value="article.summary"
               @focus="selectField('summary')"
-              @change="handleChange"
+              @input="handleChange"
               :rules="rules.summary"
               textarea
               required
@@ -47,7 +47,7 @@
               label="Featured Image"
               :value="article.featured_img"
               @focus="selectField('featured_img')"
-              @change="handleChange"
+              @input="handleChange"
               :rules="rules.featured_img"
               required
             ></v-text-field>
@@ -55,7 +55,7 @@
               v-bind:items="categories"
               :value="article.category"
               @focus="selectField('category')"
-              @change="handleChange"
+              @input="handleChange"
               label="Select"
               :rules="rules.category"
               single-line
@@ -64,7 +64,7 @@
             <v-select
               :value="article.keywords"
               @focus="selectField('keywords')"
-              @change="handleChange"
+              @input="handleChange"
               label="Keywords"
               chips
               tags
@@ -73,7 +73,7 @@
               v-bind:items="tags"
               :value="article.tags"
               @focus="selectField('tags')"
-              @change="handleChange"
+              @input="handleChange"
               label="Tags"
               chips
               tags
@@ -141,7 +141,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      postNew: 'articles/postNew',
+      post: 'articles/post',
       getOne: 'articles/getOne'
     }),
     handleChange (data) {
@@ -151,7 +151,7 @@ export default {
       })
     },
     selectField (fieldName) {
-      console.log('select ', fieldName)
+      this.selectedField = fieldName
     }
   },
   created () {
