@@ -43,7 +43,7 @@
               required
             ></v-text-field>
             <v-select
-              v-bind:items="categories"
+              v-bind:items="categoryList"
               v-model="newArticle.category"
               label="Select"
               :rules="rules.category"
@@ -113,11 +113,6 @@ export default {
           v => v.length < 1 || 'You should at least choose one'
         ]
       },
-      categories: [
-        'haha',
-        'hihi',
-        'huhu'
-      ],
       tags: [
         'hahaha',
         'hihihi',
@@ -128,13 +123,21 @@ export default {
   computed: {
     ...mapState({
       articlesLoading: state => state.articles.loading,
-      articlesErr: state => state.articles.err
-    })
+      articlesErr: state => state.articles.err,
+      categories: state => state.categories.all
+    }),
+    categoryList () {
+      return this.categories.map(category => category.name)
+    }
   },
   methods: {
     ...mapActions({
-      postNew: 'articles/post'
+      postNew: 'articles/post',
+      loadCategories: 'categories/getAll'
     })
+  },
+  created () {
+    this.loadCategories()
   }
 }
 </script>
