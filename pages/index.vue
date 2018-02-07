@@ -21,7 +21,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'articles'
+      'articles',
+      'isLogin'
     ])
   },
   methods: {
@@ -29,8 +30,12 @@ export default {
       getAll: 'articles/getAll'
     })
   },
-  mounted () {
-    this.getAll()
+  created () {
+    if (!this.isLogin) {
+      this.$router.replace('/login')
+    } else {
+      this.getAll()
+    }
   }
 }
 </script>
