@@ -52,6 +52,7 @@ import {
 } from 'vuex'
 
 export default {
+  middleware: 'notauthenticated',
   data () {
     return {
       formLogin: {
@@ -72,7 +73,8 @@ export default {
   computed: {
     ...mapState([
       'authLoading',
-      'errLogin'
+      'errLogin',
+      'isLogin'
     ])
   },
   methods: {
