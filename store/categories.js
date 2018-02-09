@@ -38,3 +38,9 @@ export const actions = {
       .catch(err => commit('SET_ERROR', err.message))
   }
 }
+
+export const getters = {
+  categoryNames (state) {
+    return state.all.map(category => category.name)
+  }
+}
