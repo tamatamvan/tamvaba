@@ -43,7 +43,7 @@
               required
             ></v-text-field>
             <v-select
-              v-bind:items="categoryList"
+              v-bind:items="categories"
               v-model="newArticle.category"
               label="Select"
               :rules="rules.category"
@@ -57,9 +57,10 @@
               tags
             ></v-select>
             <v-select
-              v-bind:items="tagList"
+              v-bind:items="tags"
               v-model="newArticle.tags"
               label="Tags"
+              @input="handleInput"
               chips
               tags
             ></v-select>
@@ -80,7 +81,8 @@
 <script>
 import {
   mapActions,
-  mapState
+  mapState,
+  mapGetters
 } from 'vuex'
 export default {
   data () {
@@ -118,23 +120,22 @@ export default {
   computed: {
     ...mapState({
       articlesLoading: state => state.articles.loading,
-      articlesErr: state => state.articles.err,
-      categories: state => state.categories.all,
-      tags: state => state.tags.all
+      articlesErr: state => state.articles.err
     }),
-    categoryList () {
-      return this.categories.map(category => category.name)
-    },
-    tagList () {
-      return this.tags.map(tag => tag.tag_name)
-    }
+    ...mapGetters({
+      categories: 'categories/categoryNames',
+      tags: 'tags/tagNames'
+    })
   },
   methods: {
     ...mapActions({
       postNew: 'articles/post',
       loadCategories: 'categories/getAll',
       loadTags: 'tags/getAll'
-    })
+    }),
+    handleInput (data) {
+      console.log('yeayeay', data)
+    }
   },
   created () {
     this.loadCategories()
