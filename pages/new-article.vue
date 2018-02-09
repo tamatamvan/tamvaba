@@ -57,7 +57,7 @@
               tags
             ></v-select>
             <v-select
-              v-bind:items="tags"
+              v-bind:items="tagList"
               v-model="newArticle.tags"
               label="Tags"
               chips
@@ -112,32 +112,33 @@ export default {
         keywordsNTags: [
           v => v.length < 1 || 'You should at least choose one'
         ]
-      },
-      tags: [
-        'hahaha',
-        'hihihi',
-        'huhuhu'
-      ]
+      }
     }
   },
   computed: {
     ...mapState({
       articlesLoading: state => state.articles.loading,
       articlesErr: state => state.articles.err,
-      categories: state => state.categories.all
+      categories: state => state.categories.all,
+      tags: state => state.tags.all
     }),
     categoryList () {
       return this.categories.map(category => category.name)
+    },
+    tagList () {
+      return this.tags.map(tag => tag.tag_name)
     }
   },
   methods: {
     ...mapActions({
       postNew: 'articles/post',
-      loadCategories: 'categories/getAll'
+      loadCategories: 'categories/getAll',
+      loadTags: 'tags/getAll'
     })
   },
   created () {
     this.loadCategories()
+    this.loadTags()
   }
 }
 </script>
