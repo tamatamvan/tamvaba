@@ -127,7 +127,7 @@ export default {
     ...mapState({
       articlesLoading: state => state.articles.loading,
       articlesErr: state => state.articles.err,
-      article: state => state.articles.selected,
+      article: state => state.articles.selected
     }),
     ...mapGetters({
       categories: 'categories/categoryNames',
