@@ -95,7 +95,8 @@
 <script>
 import {
   mapActions,
-  mapState
+  mapState,
+  mapGetters
 } from 'vuex'
 export default {
   data () {
@@ -119,30 +120,26 @@ export default {
         keywordsNTags: [
           v => v.length < 1 || 'You should at least choose one'
         ]
-      },
-      categories: [
-        'haha',
-        'hihi',
-        'huhu'
-      ],
-      tags: [
-        'hahaha',
-        'hihihi',
-        'huhuhu'
-      ]
+      }
     }
   },
   computed: {
     ...mapState({
       articlesLoading: state => state.articles.loading,
       articlesErr: state => state.articles.err,
-      article: state => state.articles.selected
+      article: state => state.articles.selected,
+    }),
+    ...mapGetters({
+      categories: 'categories/categoryNames',
+      tags: 'tags/tagNames'
     })
   },
   methods: {
     ...mapActions({
       post: 'articles/post',
-      getOne: 'articles/getOne'
+      getOne: 'articles/getOne',
+      loadCategories: 'categories/getAll',
+      loadTags: 'tags/getAll'
     }),
     handleChange (data) {
       this.$store.commit('articles/UPDATE_FIELD_VALUE', {
@@ -156,6 +153,8 @@ export default {
   },
   created () {
     this.getOne(this.$route.params.id)
+    this.loadCategories()
+    this.loadTags()
   }
 }
 </script>
