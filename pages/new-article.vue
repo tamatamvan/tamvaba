@@ -131,10 +131,16 @@ export default {
     ...mapActions({
       postNew: 'articles/post',
       loadCategories: 'categories/getAll',
-      loadTags: 'tags/getAll'
+      loadTags: 'tags/getAll',
+      addTag: 'tags/addNew'
     }),
     handleInput (data) {
-      console.log('yeayeay', data)
+      const tagName = data[data.length - 1]
+      const tagIdx = this.tags.indexOf(tagName)
+
+      if (tagIdx === -1) {
+        this.addTag(tagName)
+      }
     }
   },
   created () {
